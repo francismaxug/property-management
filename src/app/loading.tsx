@@ -6,7 +6,7 @@ const overide = {
   display: "block",
   margin: "100px auto",
 };
-const loading = () => {
+const Loading = () => {
   return (
     <ClipLoader
       color="#36d7b7"
@@ -18,4 +18,4 @@ const loading = () => {
   );
 };
 
-export default loading;
+export default Loading;

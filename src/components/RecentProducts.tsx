@@ -1,10 +1,11 @@
 import React from "react";
-import properties from "@/app/properties.json";
 import PropertyCard from "./PropertyCard";
 import Link from "next/link";
-const RecentProducts = () => {
-  const sortAndSlice = properties
-    .slice()
+import { fetchProperties } from "@/utils/fetchResource";
+
+const RecentProducts = async() => {
+  const properties = await fetchProperties();
+  const sortAndSlice = properties?.slice()
     .sort(() => Math.random() - Math.random())
     .slice(0, 3);
   return (
@@ -14,7 +15,7 @@ const RecentProducts = () => {
           Recent Properties
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {sortAndSlice.map((property) => (
+          {sortAndSlice?.map((property) => (
             <PropertyCard key={property._id} property={property} />
           ))}
         </div>

@@ -1,6 +1,8 @@
+"use client";
 import Image from "next/image";
 import React from "react";
-import properties from "@/app/properties.json";
+import { useParams } from "next/navigation";
+import { useState, useEffect } from "react";
 import {
   FaArrowLeft,
   FaBath,
@@ -10,18 +12,35 @@ import {
 } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import Link from "next/link";
-const Controls = async ({
-  params,
-}: {
-  params: {
-    id: string;
-  };
-}) => {
-  const find = properties.find((property) => property._id === params.id);
-  console.log(find);
-  await new Promise((resolve) => {
-    setTimeout(resolve, 1500);
-  });
+import { fetchSingleProperty } from "@/utils/fetchResource";
+import { Property } from "@/lib/types";
+import Loading from "@/app/loading";
+const Controls = () => {
+  const { id } = useParams();
+  const [isLoading, setIsLoading] = useState(false);
+  const [find, setFind] = useState<Property | null>(null);
+
+  useEffect(() => {
+    const fetchProperty = async () => {
+      try {
+        if (!id) return;
+        setIsLoading(true);
+        const property = await fetchSingleProperty(id);
+        setFind(property);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    if (find === null) {
+      fetchProperty();
+    }
+  }, [id, find]);
+
+  if (isLoading) return <Loading />;
+  if (!find && !isLoading) return <div className=" text-center text-2xl mt-10 font-bold">Property not found</div>;
   return (
     <>
       <section>
