@@ -6,13 +6,13 @@ import profile from "@/assets/images/profile.png";
 import Link from "next/link";
 import { FaGoogle } from "react-icons/fa";
 import { usePathname } from "next/navigation";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 const NavBar = () => {
-  const { data: session } = useSession();
+  const { status, data: session } = useSession();
   const [isOpen, setIsOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const pathname = usePathname();
-  // console.log(session);
+
   // useEffect(() => {
   //   const setAuthProviders = async () => {
   //     const res = (await getProviders()) as any;
@@ -92,7 +92,7 @@ const NavBar = () => {
                 </Link>
                 {session && (
                   <Link
-                    href="/properties/add"
+                    href="properties/add"
                     className={`${
                       pathname === "/properties/add" ? "bg-black" : ""
                     } text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2`}
@@ -105,15 +105,22 @@ const NavBar = () => {
           </div>
 
           {/* <!-- Right Side Menu (Logged Out) --> */}
-          {!session && (
+          {status === "unauthenticated" && (
             <div className="hidden md:block md:ml-6">
               <div className="flex items-center">
-                <button onClick={() => signIn()}>Sign In</button>
+                <Link
+                  href="http://localhost:3000/api/auth/signin"
+                  className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2"
+                >
+                  <FaGoogle className="mr-2 text-white" />
+                  <span>Login or Register</span>
+                </Link>
               </div>
             </div>
           )}
+
           {/* <!-- Right Side Menu (Logged In) --> */}
-          {session && (
+          {status === "authenticated" && (
             <div className="absolute inset-y-0 right-0 flex items-center pr-2 md:static md:inset-auto md:ml-6 md:pr-0">
               <Link href="messages" className="relative group">
                 <button
@@ -177,7 +184,7 @@ const NavBar = () => {
                     tabIndex={-1}
                   >
                     <Link
-                      href="/profile"
+                      href="profile"
                       className="block px-4 py-2 text-sm text-gray-700"
                       role="menuitem"
                       tabIndex={-1}
@@ -186,7 +193,7 @@ const NavBar = () => {
                       Your Profile
                     </Link>
                     <Link
-                      href="/properties/saved"
+                      href="properties/saved"
                       className="block px-4 py-2 text-sm text-gray-700"
                       role="menuitem"
                       tabIndex={-1}
@@ -194,13 +201,15 @@ const NavBar = () => {
                     >
                       Saved Properties
                     </Link>
-
-                    <button
+                    <Link
+                      href="/api/auth/signout"
                       className="block px-4 py-2 text-sm text-gray-700"
-                      onClick={() => signOut()}
+                      role="menuitem"
+                      tabIndex={-1}
+                      id="user-menu-item-2"
                     >
                       Sign Out
-                    </button>
+                    </Link>
                   </div>
                 )}
               </div>
@@ -231,7 +240,7 @@ const NavBar = () => {
             </Link>
             {session && (
               <Link
-                href="/properties/add"
+                href="properties/add"
                 className={`${
                   pathname === "/properties/add" ? "bg-gray-900" : ""
                 } text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium`}
@@ -239,11 +248,9 @@ const NavBar = () => {
                 Add Property
               </Link>
             )}
-            {!session && (
-              <Link
-                href="http://localhost:3000/api/auth/signin"
-                className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-4"
-              >
+
+            {status === "unauthenticated" && (
+              <Link href="http://localhost:3000/api/auth/signin" className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-4">
                 <span>Login or Register</span>
               </Link>
             )}

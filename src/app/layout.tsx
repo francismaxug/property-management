@@ -3,6 +3,11 @@ import { Inter } from "next/font/google";
 import "@/assets/styles/globals.css";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
+import Providers from "./providers";
+import { ToastContainer } from 'react-toastify';
+import 'photoswipe/dist/photoswipe.css'
+// import 'photoswipe/dist/default-skin/default-skin.css'
+import 'react-toastify/dist/ReactToastify.css';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,9 +24,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <NavBar/>
-        <main>{children}</main>
-        <Footer/>
+        <Providers>
+        <NavBar />
+        <main>{children}
+        <ToastContainer />
+        </main>
+        <Footer />
+        </Providers>
       </body>
     </html>
   );

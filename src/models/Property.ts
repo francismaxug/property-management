@@ -4,8 +4,8 @@ import { models, model, Schema } from "mongoose";
 const Property = new Schema(
   {
     owner: {
-      type: Schema.Types.ObjectId,
-      ref: "User",
+      type: String,
+      required: [true, "Please provide an owner"],    
     },
     name: {
       type: String,
@@ -21,7 +21,7 @@ const Property = new Schema(
     location: {
       street: {
         type: String,
-        required: [true, "Please provide a street address"],
+      
       },
       city: {
         type: String,
@@ -29,11 +29,11 @@ const Property = new Schema(
       },
       state: {
         type: String,
-        required: [true, "Please provide a state"],
+       
       },
       zipcode: {
         type: String,
-        required: [true, "Please provide a zipcode"],
+      
       },
     },
     beds: {
@@ -77,8 +77,7 @@ const Property = new Schema(
       },
     },
     images: [{
-      type: String,
-      required: [true, "Please provide images of the property"],
+      type: String
     }],
     is_featured: {
       type: Boolean,

@@ -1,27 +1,19 @@
 import React from "react";
-import PropertyCard from "@/components/PropertyCard";
-import Pagination from "@/components/Pagination";
 import { fetchProperties } from "@/utils/fetchResource";
+import PropertySearchForm from "@/components/PropertySearchForm";
+import Properties from "@/components/Properties";
 const PropertyPage = async () => {
   const properties = await fetchProperties();
-  const sortProperties = properties?.slice().sort((a, b) => {
-    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-  });
+
   return (
-    <section className="px-4 py-6">
-      <div className="container-xl lg:container m-auto px-4 py-6">
-        {sortProperties?.length === 0 ? (
-          <div className="text-center">No properties found</div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {sortProperties?.map((property) => (
-              <PropertyCard key={property._id} property={property} />
-            ))}
-          </div>
-        )}
-      </div>
-      <Pagination />
-    </section>
+    <>
+      <section className="px-4 bg-blue-700 py-7 mb-5">
+        <div className=" flex flex-start max-w-7xl mx-auto flex-col px-4 sm:px-6 lg:-px-8">
+          <PropertySearchForm />
+        </div>
+      </section>
+     <Properties/>
+    </>
   );
 };
 

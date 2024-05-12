@@ -62,7 +62,7 @@ export type Property = {
   amenities: string[];
   rates: {
     weekly?: number;
-    monthly?: number
+    monthly?: number;
     nightly?: number;
   };
   seller_info: {
@@ -74,4 +74,40 @@ export type Property = {
   is_featured: boolean;
   createdAt: string;
   updatedAt: string;
+};
+
+type Image = {
+  lastModified: number;
+  lastModifiedDate: Date;
+  name: string;
+  size: number;
+  type: string;
+  webkitRelativePath: string;
+};
+
+export type PropertyForm = {
+  type: string;
+  name: string;
+  description: string;
+  location: {
+    street: string;
+    city: string;
+    state: string;
+    zipcode: string;
+  };
+  beds: string | number;
+  baths: string | number;
+  square_feet: string | number;
+  amenities: string[];
+  rates: {
+    weekly?: string | number;
+    monthly?: string | number;
+    nightly?: string | number;
+  };
+  seller_info: {
+    name: string;
+    email: string;
+    phone: string;
+  };
+  images?: Image[];
 };

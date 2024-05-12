@@ -5,7 +5,7 @@ import { fetchProperties } from "@/utils/fetchResource";
 
 const RecentProducts = async() => {
   const properties = await fetchProperties();
-  const sortAndSlice = properties?.slice()
+  const sortAndSlice = properties.property?.slice()
     .sort(() => Math.random() - Math.random())
     .slice(0, 3);
   return (
