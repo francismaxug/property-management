@@ -1,4 +1,4 @@
-import FeaturedPropertyCard from "@/components/FeaturedPropertyCard";
+import FeaturedProperties from "@/components/FeaturedProperties";
 import HeroSection from "@/components/Hero";
 import InfoSection from "@/components/Info";
 import RecentProducts from "@/components/RecentProducts";
@@ -7,7 +7,7 @@ export default  function Home() {
     <>
       <HeroSection />
       <InfoSection />
-      <FeaturedPropertyCard />
+      <FeaturedProperties />
       <RecentProducts />
     </>
   );
